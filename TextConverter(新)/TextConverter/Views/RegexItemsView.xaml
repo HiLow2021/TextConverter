@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="TextConverter.Views.RegexItemsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:TextConverter.Views"
+             xmlns:vm="clr-namespace:TextConverter.ViewModels"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             Background="{DynamicResource MaterialDesignPaper}"
+             mc:Ignorable="d" 
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance vm:RegexItemsViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button Content="{iconPacks:Material Kind=Plus, Height=20, Width=20}" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Command="{Binding AddCommand}" ToolTip="パターン追加"/>
+            <Button Margin="10,0" Content="{iconPacks:Material Kind=Minus, Height=20, Width=20}" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Command="{Binding RemoveCommand}" ToolTip="パターン削除"/>
+            <Button Content="{iconPacks:Material Kind=Close, Height=20, Width=20}" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Command="{Binding ClearCommand}" ToolTip="パターン初期化"/>
+        </StackPanel>
+        <materialDesign:Card Margin="10,10" Padding="10" Grid.Column="1">
+            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" VerticalAlignment="Center"/>
+        </materialDesign:Card>
+        <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="2">
+            <Button Content="{iconPacks:Material Kind=FolderOpen, Height=20, Width=20}" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Command="{Binding AddCommand}" ToolTip="パターン読込"/>
+            <Button Margin="10,0" Content="{iconPacks:Material Kind=ContentSave, Height=20, Width=20}" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Command="{Binding RemoveCommand}" ToolTip="パターン保存"/>
+            <Button Content="{iconPacks:Material Kind=ContentSaveEdit, Height=20, Width=20}" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Command="{Binding RemoveCommand}" ToolTip="名前を付けてパターン保存"/>
+       </StackPanel>
+        <ListBox ItemsSource="{Binding ActionInformation.Patterns}" SelectedItem="{Binding ActionInformation.SelectedPattern}" SelectedIndex="{Binding ActionInformation.SelectedPatternIndex}" materialDesign:RippleAssist.IsDisabled="True" Grid.ColumnSpan="3" Grid.Row="1">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <EventSetter Event="PreviewGotKeyboardFocus" Handler="ListBoxItem_PreviewGotKeyboardFocus"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:ReplaceItemView/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>
