@@ -14,7 +14,7 @@
                    mc:Ignorable="d"
                    prism:ViewModelLocator.AutoWireViewModel="True"
                    d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
-                   Title="TextConverter" Height="600" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip">
+                   Title="TextConverter" TitleCharacterCasing="Normal" Height="600" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip">
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
             <Button Content="{iconPacks:Modern Kind=Pin}" Opacity="{Binding Configuration.PinOpacity}" Command="{Binding TopMostCommand}"/>
