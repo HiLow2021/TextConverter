@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="TextConverter.WPF.Views.ConfigurationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:TextConverter.WPF.Views"
+             xmlns:vm="clr-namespace:TextConverter.WPF.ViewModels"
+             mc:Ignorable="d" 
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance vm:ConfigurationViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800" Padding="20">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2" BorderThickness="0" Header="ウィンドウ" Padding="10">
+                    <StackPanel Margin="0,10,0,0">
+                        <CheckBox Content="前回終了時のウィンドウの位置で起動" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Configuration.IsSaveWindowPosition}"/>
+                        <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                            <CheckBox Margin="0,0,20,0" Content="前回終了時のウィンドウのサイズで起動" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding Configuration.IsSaveWindowSize}"/>
+                            <Button Content="サイズの初期化" Style="{StaticResource MaterialDesignRaisedButton}" Command="{Binding InitializeSizeCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2" BorderThickness="0" Header="カードモード" Margin="0,20" Padding="10">
+                    <StackPanel Margin="0,10,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,10,0" TextWrapping="Wrap" Text="文字サイズ" VerticalAlignment="Center"/>
+                            <metro:NumericUpDown Value="{Binding Configuration.CardFontSize}" StringFormat="{}{0} px " Interval="1" Maximum="100" Minimum="8" MinWidth="90"/>
+                        </StackPanel>
+                        <CheckBox Margin="0,20" Content="カードの面をそのままにして、次に進む" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Configuration.IsFixedCardSide}"/>
+                        <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}">
+                            <Expander Header="自動">
+                                <StackPanel Margin="24,10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0,0,10,0" TextWrapping="Wrap" Text="次のカードに進むまでの待ち時間" VerticalAlignment="Center"/>
+                                        <metro:NumericUpDown Name="TotalTimeNumericUpDown" Value="{Binding PlayInformation.TotalTimeSeconds}" StringFormat="{}{0} 秒 " Interval="1" Maximum="600" Minimum="1" MinWidth="90"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="0,10" Orientation="Horizontal">
+                                        <CheckBox Name="halfTimeCheckBox" Margin="0,0,10,0" Content="途中でカードを裏にする" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding Configuration.IsReverseOnHalfTime}"/>
+                                        <metro:NumericUpDown Margin="22,0" Value="{Binding Configuration.ReverseTimeSeconds}" StringFormat="{}{0} 秒 " IsEnabled="{Binding ElementName=halfTimeCheckBox, Path=IsChecked}" Interval="1" Maximum="{Binding ElementName=TotalTimeNumericUpDown, Path=Value}" Minimum="1" MinWidth="90"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Expander>
+                        </materialDesign:Card>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
